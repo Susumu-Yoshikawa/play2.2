@@ -1,14 +1,34 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import static play.data.Form.*;
 
+import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
 import views.html.index;
 
 public class Application extends Controller {
 
+	// Form用の内部クラス
+	public static class SampleForm{
+		public String message;
+	}
+
+	// ルートにアクセスした際のAction
     public static Result index() {
-        return ok(index.render("これは最初の値です。","これは真ん中の値です。","これは最後のテキストです。"));
+        return ok(index.render("何か書いて。",new Form(SampleForm.class)));
+    }
+
+    // sendにアクセスした際のAction
+    public static Result send() {
+    	Form<SampleForm> f = form(SampleForm.class).bindFromRequest();
+    	if(!f.hasErrors()) {
+    		SampleForm data = f.get();
+    		String msg = "you typed: " + data.message;
+    		return ok(index.render(msg, f));
+    	} else {
+    		return badRequest(index.render("Error", form(SampleForm.class)));
+    	}
     }
 
 }
