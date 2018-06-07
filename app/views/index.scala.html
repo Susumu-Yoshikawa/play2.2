@@ -1,28 +1,12 @@
 @(msg: String, msgs: List[Message])
 
-@main("Welcome to Play") {
-
+@main("Sample Page") {
+	<script src="@routes.Assets.at("javascripts/index.js")"
+		type="text/javascript"></script>
 	<h1>Hello</h1>
-    <p>@msg</p>
-
-    <table>
-    	<tr>
-    		<td>id</td>
-    		<td>Name</td>
-    		<td>Message</td>
-    	</tr>
-    	@for(msg <- msgs){
-    		<tr>
-    			@if(msg.id % 2 == 0){
-    				<td class="a">@msg.id</td>
-    				<td class="a">@msg.name</td>
-    				<td class="a">@msg.message</td>
-    			}else{
-    				<td class="b">@msg.id</td>
-    				<td class="b">@msg.name</td>
-    				<td class="b">@msg.message</td>
-    			}
-    		</tr>
-    	}
-    </table>
+	<p id="message">@msg</p>
+	<p>
+		<input type="text" id="input">
+		<button id="sendbtn">submit</button>
+	</p>
 }
