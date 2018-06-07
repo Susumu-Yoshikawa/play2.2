@@ -6,6 +6,7 @@ import models.Message;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.data.validation.Constraints.Required;
 import views.html.*;
 
 public class Application extends Controller {
@@ -99,6 +100,24 @@ public class Application extends Controller {
         } else {
         	return ok(delete.render("ERROR:入力にエラーが起こりました。",f));
         }
+    }
+
+    // Finder用の内部クラス
+    public static class FindForm{
+    	@Required
+    	public String input;
+    }
+
+    // findにアクセスした際のAction
+    public static Result find() {
+    	Form<FindForm> f = new Form(FindForm.class).bindFromRequest();
+    	List<Message> datas = null;
+    	if(!f.hasErrors()) {
+    		String input = f.get().input;
+    		String[] arr = input.split(",");
+    		datas = Message.find.where().like("name", "%" + input + "%").orderBy("name").findList();
+    	}
+		return ok(find.render("投稿の検索",f,datas));
     }
 
 }
