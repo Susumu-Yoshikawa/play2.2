@@ -32,7 +32,7 @@ public class Message extends Model {
 
 	@Override
 	public String toString() {
-		return ("[id:"+id+", name:"+name+", mail:"+mail+", message"+message+", date:"+postdate+"]");
+		return ("[id:"+id+", name:"+name+", mail:"+mail+", message:"+message+", date:"+postdate+"]");
 	}
 
 }
