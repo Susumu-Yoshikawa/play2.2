@@ -37,10 +37,11 @@ public class Application extends Controller {
     	Form<Message> f = new Form(Message.class).bindFromRequest();
         if(!f.hasErrors()) {
         	Message data = f.get();
+        	data.member = Member.findByName(data.name);
         	data.save();
         	return redirect("/");
         } else {
-        	return badRequest(add.render("ERROR",f));
+        	return ok(add.render("ERROR",f));
         }
     }
 

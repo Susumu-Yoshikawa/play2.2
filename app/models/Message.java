@@ -2,15 +2,15 @@ package models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
 
 import play.data.validation.Constraints.Required;
-import play.data.validation.Constraints.Validator;
 import play.db.ebean.Model;
-import play.libs.F;
 
 @Entity
 public class Message extends Model {
@@ -27,12 +27,16 @@ public class Message extends Model {
 	@CreatedTimestamp
 	public Date postdate;
 
+	@ManyToOne(cascade=CascadeType.ALL)
+	public Member member;
+
 	public static Finder<Long, Message> find =
 			new Finder<Long, Message>(Long.class, Message.class);
 
 	@Override
 	public String toString() {
-		return ("[id:"+id+", name:"+name+", message:"+message+", date:"+postdate+"]");
+		return ("[id:"+id+", member:<"+member.name+", "+member.mail+">, message:"+message+
+				", date:"+postdate+"]");
 	}
 
 	public static Message findByName(String input) {
