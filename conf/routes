@@ -9,4 +9,5 @@
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /                           controllers.Application.index()
-POST    /                           controllers.Application.send()
+GET     /add                        controllers.Application.add()
+POST    /create                     controllers.Application.create()

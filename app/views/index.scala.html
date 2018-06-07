@@ -1,19 +1,22 @@
-@(msg: String, form1: Form[Application.SampleForm])
+@(msg: String, msgs: List[Message])
 
 @main("Welcome to Play") {
 
 	<h1>Hello</h1>
     <p>@msg</p>
 
-    @helper.form(action = routes.Application.send){
-
-    	@helper.repeat(
-    		field = form1("inputs"), min = 3
-    	){fid =>
-    		@helper.inputText(
-    			field = fid, '_label -> "input"
-    		)
+    <table>
+    	<tr>
+    		<td>id</td>
+    		<td>Name</td>
+    		<td>Message</td>
+    	</tr>
+    	@for(msg <- msgs){
+    		<tr>
+    			<td>@msg.id</td>
+    			<td>@msg.name</td>
+    			<td>@msg.message</td>
+    		</tr>
     	}
-    	<input type="submit">
-    }
+    </table>
 }
