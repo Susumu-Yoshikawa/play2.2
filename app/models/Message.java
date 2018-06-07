@@ -1,11 +1,12 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
 
@@ -27,15 +28,20 @@ public class Message extends Model {
 	@CreatedTimestamp
 	public Date postdate;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	public Member member;
+	@ManyToMany(mappedBy="messages", cascade=CascadeType.ALL)
+	public List<Member> members;
 
 	public static Finder<Long, Message> find =
 			new Finder<Long, Message>(Long.class, Message.class);
 
 	@Override
 	public String toString() {
-		return ("[id:"+id+", member:<"+member.name+", "+member.mail+">, message:"+message+
+		String mems = "{";
+		for(Member m : members) {
+			mems += " " + m.name;
+		}
+		mems += "}";
+		return ("[id:"+id+", message:"+message+", members:"+mems+
 				", date:"+postdate+"]");
 	}
 

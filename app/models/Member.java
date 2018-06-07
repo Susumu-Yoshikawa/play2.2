@@ -3,10 +3,9 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
@@ -29,7 +28,7 @@ public class Member extends Model {
 	public static Finder<Long, Member> find =
 			new Finder<Long, Member>(Long.class, Member.class);
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	public List<Message> messages = new ArrayList<Message>();
 
 	@Override
