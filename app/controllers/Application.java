@@ -18,49 +18,50 @@ import views.html.*;
 
 public class Application extends Controller {
 
-	// フォーム管理用クラス
-	public static class SampleForm{
-		public List<String> inputs;
-	}
-
 	// ルートにアクセスした際のAction
-	public static Result index() {
-		List<Message> msgs = Message.find.all();
-		return ok(index.render("please set form.", msgs));
-	}
+    public static Result index() {
+    	List<Message> msgs = Message.find.all();
+        return ok(index.render("投稿メッセージ",msgs));
+    }
 
-	// JSONデータの作成
-	public static Result ajax() {
-		String input = request().body().asFormUrlEncoded().get("input")[0];
-		ObjectNode result = Json.newObject();
-		if(input == null) {
-			result.put("status", "BAD");
-			result.put("message", "Can't get sending data...");
-			return badRequest(result);
-		} else {
-			result.put("status", "OK");
-			result.put("message", input);
-			return ok(result);
-		}
-	}
+    // Message Action =====================================================
 
-	// dummy
-	public static Result create() {
-		return redirect("/");
-	}
+    // 新規作成フォームのAction
+    public static Result add() {
+    	Form<Message> f = new Form(Message.class);
+    	return ok(add.render("投稿フォーム", f));
+    }
 
-	// 表示用のAction
-	public static Result add() {
-		/*
-		Form<Message> f = new Form(Message.class);
-		List<Member> mems = Member.find.select("name").findList();
-		List<Tuple2<String, String>> opts = new ArrayList<Tuple2<String, String>>();
-		for(Member mem : mems) {
-			opts.add(new Tuple2(mem.name, mem.name));
-		}
-		return ok(add.render("投稿フォーム", f, opts));
-		*/
-		return redirect("/");
-	}
+    // createにアクセスした際のAction
+    public static Result create() {
+    	Form<Message> f = new Form(Message.class).bindFromRequest();
+        if(!f.hasErrors()) {
+        	Message data = f.get();
+        	data.members = Member.findByName(data.name);
+        	data.save();
+        	return redirect("/");
+        } else {
+        	return ok(add.render("ERROR",f));
+        }
+    }
+
+    // Member Action =====================================================
+    // メンバー作成フォームのAction
+    public static Result add2() {
+    	Form<Member> f = new Form(Member.class);
+    	return ok(add2.render("メンバー登録フォーム", f));
+    }
+
+    // create2にアクセスした際のAction
+    public static Result create2() {
+    	Form<Member> f = new Form(Member.class).bindFromRequest();
+        if(!f.hasErrors()) {
+        	Member data = f.get();
+        	data.save();
+        	return redirect("/");
+        } else {
+        	return badRequest(add2.render("ERROR",f));
+        }
+    }
 
 }
