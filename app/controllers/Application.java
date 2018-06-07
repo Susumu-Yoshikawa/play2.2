@@ -2,6 +2,9 @@ package controllers;
 
 import static play.data.Form.*;
 
+import java.util.List;
+
+import models.Message;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -16,6 +19,7 @@ public class Application extends Controller {
 
 	// ルートにアクセスした際のAction
     public static Result index() {
-        return ok(index.render("データベースのサンプル"));
+    	List<Message> datas = Message.find.all();
+        return ok(index.render("データベースのサンプル",datas));
     }
 }
