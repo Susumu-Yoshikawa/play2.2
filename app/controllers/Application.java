@@ -115,7 +115,9 @@ public class Application extends Controller {
     	if(!f.hasErrors()) {
     		String input = f.get().input;
     		String[] arr = input.split(",");
-    		datas = Message.find.where().like("name", "%" + input + "%").orderBy("name").findList();
+    		String q = "name like '%" + input + "%'";
+    		datas = Message.find.where(q).orderBy("name")
+    				.findPagingList(10).getPage(0).getList();
     	}
 		return ok(find.render("投稿の検索",f,datas));
     }
