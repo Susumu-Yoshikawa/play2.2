@@ -1,16 +1,12 @@
 @(msg: String)
 
-<!DOCTYPE html>
+@main("Welcome to Play") {
 
-<html>
-    <head>
-        <title>Sample</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    </head>
-    <body>
-        <h1>Hello!!!</h1>
-        <p>@msg</p>
-    </body>
-</html>
+	<h1>Hello</h1>
+    <p>@msg</p>
+    <form action="/" method="post">
+    	<input type="text" name="input">
+    	<input type="submit">
+    </form>
+
+}
