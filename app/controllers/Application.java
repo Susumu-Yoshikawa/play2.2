@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import models.Member;
 import models.Message;
 import play.data.Form;
 import play.mvc.Controller;
@@ -19,8 +20,11 @@ public class Application extends Controller {
 	// ルートにアクセスした際のAction
     public static Result index() {
     	List<Message> datas = Message.find.all();
-        return ok(index.render("データベースのサンプル",datas));
+    	List<Member> datas2 = Member.find.all();
+        return ok(index.render("データベースのサンプル",datas,datas2));
     }
+
+    // Message Action =====================================================
 
     // 新規作成フォームのAction
     public static Result add() {
@@ -37,6 +41,25 @@ public class Application extends Controller {
         	return redirect("/");
         } else {
         	return badRequest(add.render("ERROR",f));
+        }
+    }
+
+    // Member Action =====================================================
+    // メンバー作成フォームのAction
+    public static Result add2() {
+    	Form<Member> f = new Form(Member.class);
+    	return ok(add2.render("メンバー登録フォーム", f));
+    }
+
+    // create2にアクセスした際のAction
+    public static Result create2() {
+    	Form<Member> f = new Form(Member.class).bindFromRequest();
+        if(!f.hasErrors()) {
+        	Member data = f.get();
+        	data.save();
+        	return redirect("/");
+        } else {
+        	return badRequest(add2.render("ERROR",f));
         }
     }
 
