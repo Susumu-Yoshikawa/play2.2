@@ -9,13 +9,16 @@
 
     	@(helper.inputText(
     		field = form1("input"),
-    		args = 'type -> "number",
-    		'min -> 10, 'max -> 100
+    		args = '_label -> "Your Name:",
+    		'_help -> "名前を書いてください。",
+    		'size -> 30
     	))
 
     	@(helper.inputPassword(
     		field = form1("pass"),
-    		args = 'size -> 30
+    		args = '_label -> "Password",
+    		'_help -> "パスワードを書いてください。",
+    		'size -> 30
     	))
 
     	@(helper.checkbox(
