@@ -41,7 +41,7 @@ public class ApplicationTest {
 		Message msg = new Message();
 		msg.id = 10002L;
 		msg.name = mem.name;
-		msg.members = mem;
+		msg.member = mem;
 		msg.message = "dummy message";
 		msg.postdate = new Date();
 		mem.messages = new ArrayList<Message>();

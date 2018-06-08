@@ -1,20 +1,19 @@
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.avaje.ebean.Ebean;
 
-import controllers.Application;
-import models.Member;
-import models.Message;
-import play.GlobalSettings;
-import play.libs.Yaml;
+import models.*;
+import play.*;
+import play.libs.*;
+
+
 
 public class Global extends GlobalSettings {
 
-	//@Override
-	public void onStart(Application app) {
-		insert(app);
-	}
+    @Override
+    public void onStart(Application app) {
+        insert(app);
+    }
 
 	@SuppressWarnings("unchecked")
 	public void insert(Application app) {
@@ -23,9 +22,10 @@ public class Global extends GlobalSettings {
 		Ebean.save(all.get("messages"));
 		for(Object message : all.get("messages")){
 			Message target = Message.find.byId(((Message)message).id);
-			target.members = Member.findByName(target.name);
+			target.member = Member.findByName(target.name);
 			target.update();
 		}
 	}
 
+	
 }

@@ -28,7 +28,7 @@ public class Message extends Model {
 	public Date postdate;
 
 	@ManyToOne(cascade=CascadeType.ALL)
-	public Member members;
+	public Member member;
 
 	public static Finder<Long, Message> find =
 			new Finder<Long, Message>(Long.class, Message.class);

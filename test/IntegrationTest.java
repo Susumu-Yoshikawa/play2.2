@@ -44,7 +44,7 @@ public class IntegrationTest {
     		// Messageの用意
     		Message message = new Message();
     		message.id = 99999L;
-    		message.members = member2;
+    		message.member = member2;
     		message.name = member.name;
     		message.message = "dummy test message.";
     		message.save();
@@ -57,7 +57,7 @@ public class IntegrationTest {
     		// Modelのチェック
     		assertThat(member2.name).isEqualTo(member.name);
     		assertThat(message2.message).isEqualTo(message.message);
-    		assertThat(message2.members).isEqualTo(member2);
+    		assertThat(message2.member).isEqualTo(member2);
 
     		// NULLチェック
     		Member member3 = Member.find.byId(98765L);
